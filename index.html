@@ -34,6 +34,7 @@ html, body {
   height: 985.5px; /* 下のコントロールバーを除く */
   object-fit: contain;
   background: #fff;
+  z-index: 1;
 }
 
 #bottomBar {
@@ -42,7 +43,8 @@ html, body {
   top: 985.5px;
   width: 1920px;
   height: 94.5px;
-  background: #f2f2f2;
+  background: #9fdefd;
+  z-index: 0; /* 最背面 */
 }
 
 .btn {
@@ -51,9 +53,44 @@ html, body {
   border: none;
   cursor: pointer;
   padding: 0;
+  z-index: 5; /* ボタンは bottomBar より前面 */
 }
 
 .btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* presetMenu */
+#presetMenu {
+  position: absolute;
+  display: none;
+  width: 188px;
+  height: 158px;
+  z-index: 10; /* presetMenu はボタンより前面 */
+}
+
+#presetMenu img.menu-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+#presetMenu button {
+  position: absolute;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 15; /* ボタンを前面に */
+}
+
+#presetMenu button img {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -70,30 +107,26 @@ html, body {
   <div id="bottomBar"></div>
 
   <!-- ボタン -->
-  <button id="btn1" class="btn" style="left:16.3px; top:997.6px; width:70px; height:70px;">
-    <img src="image/back.svg" alt="戻る">
-  </button>
-  <button id="btn2" class="btn" style="left:104.2px; top:997.6px; width:70px; height:70px;">
-    <img src="image/yarinaoshi.svg" alt="最初に巻き戻すだけ">
-  </button>
-  <button id="btn3" class="btn" style="left:192.1px; top:997.6px; width:70px; height:70px;">
-    <img src="image/stop.svg" alt="停止">
-  </button>
-  <button id="btn4" class="btn" style="left:280.0px; top:997.6px; width:70px; height:70px;">
-    <img src="image/start.svg" alt="再生">
-  </button>
-  <button id="btn5" class="btn" style="left:367.9px; top:997.6px; width:159.2px; height:70px;">
-    <img src="image/again.svg" alt="最初に戻して再生">
-  </button>
-  <button id="btn6" class="btn" style="left:545.0px; top:997.8px; width:170.8px; height:70px;">
-    <img src="image/after_again.svg" alt="after_again">
-  </button>
-  <button id="btn7" class="btn" style="left:733.7px; top:997.6px; width:70px; height:70px;">
-    <img src="image/maki.svg" alt="10秒巻き戻し">
-  </button>
-  <button id="btn8" class="btn" style="left:821.6px; top:997.6px; width:70px; height:70px;">
-    <img src="image/oku.svg" alt="10秒送り">
-  </button>
+  <button id="btn1" class="btn" style="left:16.3px; top:997.6px; width:70px; height:70px;"><img src="image/back.svg" alt="戻る"></button>
+  <button id="btn2" class="btn" style="left:104.2px; top:997.6px; width:70px; height:70px;"><img src="image/yarinaoshi.svg" alt="最初に巻き戻すだけ"></button>
+  <button id="btn3" class="btn" style="left:192.1px; top:997.6px; width:70px; height:70px;"><img src="image/stop.svg" alt="停止"></button>
+  <button id="btn4" class="btn" style="left:280.0px; top:997.6px; width:70px; height:70px;"><img src="image/start.svg" alt="再生"></button>
+  <button id="btn5" class="btn" style="left:367.9px; top:997.6px; width:159.2px; height:70px;"><img src="image/again.svg" alt="最初に戻して再生"></button>
+  <button id="btn6" class="btn" style="left:545.0px; top:997.8px; width:170.8px; height:70px;"><img src="image/after_again.svg" alt="after_again"></button>
+  <button id="btn7" class="btn" style="left:733.7px; top:997.6px; width:70px; height:70px;"><img src="image/maki.svg" alt="10秒巻き戻し"></button>
+  <button id="btn8" class="btn" style="left:821.6px; top:997.6px; width:70px; height:70px;"><img src="image/oku.svg" alt="10秒送り"></button>
+
+  <!-- presetボタン -->
+  <button id="btnPreset" class="btn" style="left:1717.3px; top:997.8px; width:188px; height:70px;"><img src="image/preset.svg" alt="プリセット"></button>
+
+  <!-- presetメニュー -->
+  <div id="presetMenu">
+    <img src="image/preset_menu.svg" class="menu-bg">
+    <!-- ①歌詞付き -->
+    <button id="btnPreset1" style="top:4px; left:4px; width:180.3px; height:62.5px;"><img src="image/all.svg" alt="歌詞付きモード"></button>
+    <!-- ②音声のみ -->
+    <button id="btnPreset2" style="top:70.9px; left:4px; width:180.3px; height:62.5px;"><img src="image/sounds_only.svg" alt="音声のみモード"></button>
+  </div>
 
   <!-- 音声 -->
   <audio id="audio" src="audio/sample.mp3"></audio>
@@ -104,8 +137,9 @@ const audio = document.getElementById('audio');
 const btn4 = document.getElementById('btn4');
 const btn4Img = btn4.querySelector('img');
 const imageDisplay = document.getElementById('imageDisplay');
+const presetBtn = document.getElementById("btnPreset");
+const presetMenu = document.getElementById("presetMenu");
 
-// タイム指定画像リスト（分,秒,画像パス）
 const imageTimes = [
   {min:0, sec:1, src:"image/1.png"},
   {min:0, sec:8, src:"image/2.png"},
@@ -123,66 +157,74 @@ const imageTimes = [
 ];
 
 // 再生/一時停止ボタン
-btn4.addEventListener('click', () => {
-  if(audio.paused){
-    audio.play();
-  } else {
-    audio.pause();
-  }
-});
+btn4.addEventListener('click', () => { audio.paused ? audio.play() : audio.pause(); });
+audio.addEventListener('play', () => { btn4Img.src="image/0.svg"; btn4Img.alt="一時停止"; });
+audio.addEventListener('pause', () => { btn4Img.src="image/start.svg"; btn4Img.alt="再生"; });
 
-// 再生状態に応じてボタン画像切り替え
-audio.addEventListener('play', () => {
-  btn4Img.src = "image/0.svg";
-  btn4Img.alt = "一時停止";
-});
-audio.addEventListener('pause', () => {
-  btn4Img.src = "image/start.svg";
-  btn4Img.alt = "再生";
-});
-
-// 他のボタン機能
-document.getElementById('btn1').addEventListener('click', ()=> {}); // 未割り当て
-document.getElementById('btn2').addEventListener('click', ()=> { 
-  audio.currentTime = 0; // 巻き戻すだけ
-});
+// 既存ボタン
+document.getElementById('btn1').addEventListener('click', ()=> {});
+document.getElementById('btn2').addEventListener('click', ()=> { audio.currentTime=0; });
 document.getElementById('btn3').addEventListener('click', ()=> audio.pause());
-document.getElementById('btn5').addEventListener('click', ()=> { 
-  audio.currentTime = 0; 
-  audio.play(); // 巻き戻して再生
-});
-document.getElementById('btn7').addEventListener('click', ()=> audio.currentTime = Math.max(0, audio.currentTime - 10));
-document.getElementById('btn8').addEventListener('click', ()=> audio.currentTime = Math.min(audio.duration, audio.currentTime + 10));
+document.getElementById('btn5').addEventListener('click', ()=> { audio.currentTime=0; audio.play(); });
+document.getElementById('btn7').addEventListener('click', ()=> audio.currentTime=Math.max(0,audio.currentTime-10));
+document.getElementById('btn8').addEventListener('click', ()=> audio.currentTime=Math.min(audio.duration,audio.currentTime+10));
 
-// 音声再生中に画像切り替え
-audio.addEventListener('timeupdate', () => {
-  const currentSec = audio.currentTime;
-  for(let i = imageTimes.length - 1; i >= 0; i--){
-    const targetSec = imageTimes[i].min * 60 + imageTimes[i].sec;
-    if(currentSec >= targetSec){
-      if(imageDisplay.src.indexOf(imageTimes[i].src) === -1){
-        imageDisplay.src = imageTimes[i].src;
-      }
-      break;
-    }
+// presetメニュー追加
+let mode="ALL";
+
+presetBtn.addEventListener("click", (e)=>{
+  e.stopPropagation();
+  presetMenu.style.display="block";
+  presetMenu.style.left=presetBtn.offsetLeft+"px";
+  presetMenu.style.top=(presetBtn.offsetTop - presetMenu.offsetHeight) + "px";
+});
+
+document.getElementById("btnPreset1").addEventListener("click", ()=>{
+  mode="ALL";
+  imageDisplay.src="image/1.png";
+  presetMenu.style.display="none";
+});
+document.getElementById("btnPreset2").addEventListener("click", ()=>{
+  mode="SOUNDS_ONLY";
+  imageDisplay.src="image/sounds_only.png";
+  presetMenu.style.display="none";
+});
+
+document.addEventListener("click", (e)=>{
+  if(presetMenu.style.display==="block" && !presetMenu.contains(e.target) && !presetBtn.contains(e.target)){
+    presetMenu.style.display="none";
   }
 });
 
-// ウィンドウリサイズでスケーリング
+// timeupdate
+audio.addEventListener('timeupdate', ()=>{
+  if(mode==="ALL"){
+    const currentSec=audio.currentTime;
+    for(let i=imageTimes.length-1;i>=0;i--){
+      const t=imageTimes[i].min*60+imageTimes[i].sec;
+      if(currentSec>=t){
+        if(imageDisplay.src.indexOf(imageTimes[i].src)===-1) imageDisplay.src=imageTimes[i].src;
+        break;
+      }
+    }
+  } else if(mode==="SOUNDS_ONLY"){
+    if(imageDisplay.src.indexOf("sounds_only.png")===-1) imageDisplay.src="image/sounds_only.png";
+  }
+});
+
+// リサイズ
 function resizeContainer(){
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-  const baseWidth = 1920;
-  const baseHeight = 1080;
-  const parent = document.getElementById('parentContainer');
-  const aspectRatio = baseWidth / baseHeight;
+  const vw=window.innerWidth;
+  const vh=window.innerHeight;
+  const baseW=1920, baseH=1080;
+  const parent=document.getElementById('parentContainer');
+  const ar=baseW/baseH;
   let scale;
-  if(vw/vh > aspectRatio) scale = vh/baseHeight;
-  else scale = vw/baseWidth;
-  parent.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  if(vw/vh>ar) scale=vh/baseH; else scale=vw/baseW;
+  parent.style.transform=`translate(-50%, -50%) scale(${scale})`;
 }
-window.addEventListener('resize', resizeContainer);
-window.addEventListener('load', resizeContainer);
+window.addEventListener('resize',resizeContainer);
+window.addEventListener('load',resizeContainer);
 </script>
 </body>
 </html>
