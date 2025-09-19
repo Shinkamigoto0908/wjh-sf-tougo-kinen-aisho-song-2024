@@ -7,145 +7,75 @@
 <link rel="icon" href="favicon.ico" type="image/x-icon" />
 <style>
 html, body {
-  margin:0;
-  padding:0;
-  height:100vh;
-  width:100vw;
-  background:#ccc;
-  font-family:sans-serif;
-  overflow:hidden;
+  margin:0; padding:0; width:100vw; height:100vh;
+  background:#ccc; font-family:sans-serif; overflow:hidden;
 }
 #parentContainer {
-  position:absolute;
-  width:1920px;
-  height:1080px;
-  background:#fff;
-  left:50%;
-  top:50%;
-  transform-origin:50% 50%;
+  position:absolute; width:1920px; height:1080px;
+  background:#fff; left:50%; top:50%; transform-origin:50% 50%;
 }
 #imageDisplay {
-  position:absolute;
-  top:0;
-  left:0;
-  width:1920px;
-  height:985.5px;
-  object-fit:contain;
-  background:#fff;
-  z-index:1;
+  position:absolute; top:0; left:0; width:1920px; height:985.5px;
+  object-fit:contain; background:#fff; z-index:1;
 }
 #bottomBar {
-  position:absolute;
-  left:0;
-  top:985.5px;
-  width:1920px;
-  height:94.5px;
-  background:#9fdefd;
-  z-index:0;
+  position:absolute; left:0; top:985.5px; width:1920px; height:94.5px;
+  background:#9fdefd; z-index:0;
 }
 .btn {
-  position:absolute;
-  background:none;
-  border:none;
-  cursor:pointer;
-  padding:0;
-  z-index:5;
+  position:absolute; background:none; border:none; cursor:pointer; padding:0; z-index:5;
 }
 .btn img {
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  display:block;
+  width:100%; height:100%; object-fit:contain; display:block;
 }
 
 /* presetMenu */
 #presetMenu {
-  position:absolute;
-  display:none;
-  width:188px;
-  height:158px;
-  z-index:10;
+  position:absolute; display:none; width:188px; height:158px; z-index:10;
 }
 #presetMenu img.menu-bg {
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:5;
+  position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;
 }
 #presetMenu button {
-  position:absolute;
-  border:none;
-  background:none;
-  cursor:pointer;
-  padding:0;
-  z-index:15;
+  position:absolute; border:none; background:none; cursor:pointer; padding:0; z-index:15;
 }
 #presetMenu button img {
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  display:block;
+  width:100%; height:100%; object-fit:contain; display:block;
 }
 
 /* speedMenu */
 #speedMenu {
-  position:absolute;
-  display:none;
-  width:160px;
-  height:134px;
-  left:909.1px;
-  top:875.3px;
-  z-index:12;
+  position:absolute; display:none; width:160px; height:134px;
+  left:909.1px; top:875.3px; z-index:12;
 }
 #speedMenu img.menu-bg {
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:2;
+  position:absolute; top:0; left:0; width:100%; height:100%; z-index:2;
 }
 .speed-btn {
-  position:absolute;
-  width:74px;
-  height:53px;
-  border-radius:10px;
-  overflow:hidden;
-  box-sizing:border-box;
-  z-index:5;
-  cursor:pointer;
+  position:absolute; width:74px; height:53px; border-radius:10px;
+  overflow:hidden; box-sizing:border-box; z-index:5; cursor:pointer;
   transition:box-shadow .12s,border-color .12s;
 }
 .speed-btn.active {
-  border:2px solid #ff3333;
-  box-shadow:0 4px 10px rgba(255,50,50,0.12);
+  border:2px solid #ff3333; box-shadow:0 4px 10px rgba(255,50,50,0.12);
 }
 #btnSpeedToggle {
-  left:909.1px;
-  top:998.8px;
-  width:160px;
-  height:68px;
-  z-index:13; /* メニューより前面にしてボタン出す */
+  left:909.1px; top:998.8px; width:160px; height:68px; z-index:13;
 }
 </style>
 </head>
 <body>
 <div id="parentContainer">
-  <!-- 画像表示 -->
   <img id="imageDisplay" src="image/1.png" alt="表示画像">
-
-  <!-- 下バー -->
   <div id="bottomBar"></div>
 
   <!-- 再生系ボタン -->
   <button id="btn1" class="btn" style="left:16.3px; top:997.6px; width:70px; height:70px;"><img src="image/back.svg" alt="戻る"></button>
   <button id="btn2" class="btn" style="left:104.2px; top:997.6px; width:70px; height:70px;"><img src="image/yarinaoshi.svg" alt="巻き戻すだけ"></button>
   <button id="btn3" class="btn" style="left:192.1px; top:997.6px; width:70px; height:70px;"><img src="image/stop.svg" alt="停止"></button>
-  <button id="btn4" class="btn" style="left:280.0px; top:997.6px; width:70px; height:70px;"><img src="image/start.svg" alt="再生"></button>
+  <button id="btn4" class="btn" style="left:280px; top:997.6px; width:70px; height:70px;"><img src="image/start.svg" alt="再生"></button>
   <button id="btn5" class="btn" style="left:367.9px; top:997.6px; width:159.2px; height:70px;"><img src="image/again.svg" alt="最初に戻して再生"></button>
-  <button id="btn6" class="btn" style="left:545.0px; top:997.8px; width:170.8px; height:70px;"><img src="image/after_again.svg" alt="after_again"></button>
+  <button id="btn6" class="btn" style="left:545px; top:997.8px; width:170.8px; height:70px;"><img src="image/after_again.svg" alt="after_again"></button>
   <button id="btn7" class="btn" style="left:733.7px; top:997.6px; width:70px; height:70px;"><img src="image/maki.svg" alt="10秒巻き戻し"></button>
   <button id="btn8" class="btn" style="left:821.6px; top:997.6px; width:70px; height:70px;"><img src="image/oku.svg" alt="10秒送り"></button>
 
@@ -171,11 +101,29 @@ html, body {
 </div>
 
 <script>
-// 既存再生処理
+// 画像切替リスト
+const imageTimes=[
+  {min:0, sec:1, src:"image/1.png"},
+  {min:0, sec:8, src:"image/2.png"},
+  {min:0, sec:35, src:"image/3.png"},
+  {min:1, sec:2, src:"image/4.png"},
+  {min:1, sec:40, src:"image/5.png"},
+  {min:2, sec:8, src:"image/6.png"},
+  {min:2, sec:34, src:"image/7.png"},
+  {min:3, sec:15, src:"image/8.png"},
+  {min:3, sec:40, src:"image/9.png"},
+  {min:4, sec:5, src:"image/10.png"},
+  {min:4, sec:43, src:"image/11.png"},
+  {min:5, sec:7, src:"image/12.png"},
+  {min:5, sec:33, src:"image/13.png"},
+];
+
 const audio=document.getElementById('audio');
 const btn4=document.getElementById('btn4');
 const btn4Img=btn4.querySelector('img');
 const imageDisplay=document.getElementById('imageDisplay');
+
+// 再生/一時停止
 btn4.addEventListener('click',()=>{audio.paused?audio.play():audio.pause();});
 audio.addEventListener('play',()=>{btn4Img.src="image/0.svg"; btn4Img.alt="一時停止";});
 audio.addEventListener('pause',()=>{btn4Img.src="image/start.svg"; btn4Img.alt="再生";});
@@ -205,7 +153,7 @@ document.getElementById("btnPreset2").addEventListener("click",()=>{
   mode="SOUNDS_ONLY"; imageDisplay.src="image/sounds_only.png"; presetMenu.style.display="none";
 });
 
-// speedメニュー
+// speed
 const speedToggle=document.getElementById('btnSpeedToggle');
 const speedMenu=document.getElementById('speedMenu');
 audio.playbackRate=1.0;
@@ -214,8 +162,6 @@ speedToggle.addEventListener('click',(e)=>{
   e.stopPropagation();
   speedMenu.style.display=(speedMenu.style.display==="block"?"none":"block");
 });
-
-// speedボタン
 function setPlaybackRate(rate,btnId){
   audio.playbackRate=rate;
   document.querySelectorAll('.speed-btn').forEach(el=>el.classList.remove('active'));
@@ -251,11 +197,9 @@ audio.addEventListener('timeupdate',()=>{
 
 // リサイズ
 function resizeContainer(){
-  const vw=window.innerWidth;
-  const vh=window.innerHeight;
-  const baseW=1920, baseH=1080;
+  const vw=window.innerWidth, vh=window.innerHeight, baseW=1920, baseH=1080;
   const parent=document.getElementById('parentContainer');
-  let scale=(vw/vh>baseW/baseH)?vh/baseH:vw/baseW;
+  const scale=(vw/vh>baseW/baseH)?vh/baseH:vw/baseW;
   parent.style.transform=`translate(-50%,-50%) scale(${scale})`;
 }
 window.addEventListener('resize',resizeContainer);
